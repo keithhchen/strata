@@ -155,17 +155,9 @@ browser-tests/
 ## Getting Started
 
 ```bash
-cp -r path/to/strata/harness            ./harness
-cp -r path/to/strata/browser-tests      ./browser-tests
-cp -r path/to/strata/templates/features ./features
-cp -r path/to/strata/templates/issues   ./issues
-cat path/to/strata/gitignore.snippet >> .gitignore
-
-cp -r path/to/strata/skills/static  .claude/skills/static
-cp -r path/to/strata/skills/unit    .claude/skills/unit
-cp -r path/to/strata/skills/browser .claude/skills/browser
-
-./harness/testing.sh all
+git clone https://github.com/keithhchen/strata
+python3 strata/strata.py init ./my-project
+cd my-project && ./harness/testing.sh all
 ```
 
 Full methodology — scenario design, driver contract, evidence taxonomy, development paradigm: **[STRATA.md](STRATA.md)**

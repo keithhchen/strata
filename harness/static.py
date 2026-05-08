@@ -32,9 +32,13 @@ WHAT DOES NOT BELONG HERE
 
 import ast
 import re
+import sys
 from pathlib import Path
 
 import pytest
+
+sys.path.insert(0, str(Path(__file__).parent))
+from scenario_validator import validate_all as _validate_scenarios
 
 ROOT = Path(__file__).parent.parent
 
@@ -196,3 +200,13 @@ def test_browser_tests_structure_exists():
     """
     for d in ["browser-tests/scenarios", "browser-tests/reports", "browser-tests/artifacts"]:
         assert (ROOT / d).is_dir(), f"{d}/ must exist"
+
+
+def test_scenarios_valid():
+    """All browser scenarios must conform to the scenario contract.
+
+    If this fails: a scenario is missing required frontmatter fields or
+    markdown sections — the driver cannot reliably execute it.
+    """
+    errors = _validate_scenarios()
+    assert not errors, "\n".join(f"{e.path.name}: {e.message}" for e in errors)

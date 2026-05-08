@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Strata scenario frontmatter",
+  "description": "Schema for the YAML frontmatter block in a browser scenario file.",
+  "type": "object",
+  "required": ["name", "tags", "surfaces", "fixtures", "actions", "waits"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Kebab-case identifier. Must match the filename (without .md)."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Feature area labels, e.g. [auth, routing]."
+    },
+    "surfaces": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["dom", "network", "server_logs", "database", "filesystem"]
+      },
+      "minItems": 1,
+      "description": "Which observation surfaces this scenario uses."
+    },
+    "fixtures": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Named fixtures required before the scenario runs."
+    },
+    "actions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "High-level user actions performed in this scenario."
+    },
+    "waits": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Named async convergence points (page loads, API responses, etc.)."
+    }
+  }
+}
