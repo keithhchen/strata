@@ -4,6 +4,8 @@
 
 [中文文档](README.zh.md)
 
+> **Know that it works. Not just that it was written.**
+
 ---
 
 AI can write code faster than you can review it. That's the problem.
