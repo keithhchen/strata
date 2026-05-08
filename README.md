@@ -2,6 +2,8 @@
 
 **Named after geological strata** — the distinct layers that together tell the complete story of the earth.
 
+[中文文档](README.zh.md)
+
 Three test layers. Each answers a different question. Together they prove your software works.
 
 | Layer | Question | Cost | Needs |
@@ -14,12 +16,29 @@ AI coding assistant skills make the methodology repeatable — for human develop
 
 ---
 
+## Contents
+
+- [Quick Start](#quick-start)
+- [Using Strata in a Web App](#using-strata-in-a-web-app)
+  - [Step 1: Define your invariants](#step-1-define-your-invariants)
+  - [Step 2: Write failing static tests](#step-2-write-failing-static-tests)
+  - [Step 3: Write unit tests for pure logic](#step-3-write-unit-tests-for-pure-logic)
+  - [Step 4: Install skills and write your first browser scenario](#step-4-install-skills-and-write-your-first-browser-scenario)
+  - [Step 5: Your daily workflow](#step-5-your-daily-workflow)
+- [Layer Selection](#layer-selection)
+- [AI Skills](#ai-skills)
+- [Project Structure](#project-structure)
+- [Completion Standard](#completion-standard)
+- [Reference](#reference)
+
+---
+
 ## Quick Start
 
 ### Option A: New project from template
 
 ```bash
-gh repo create my-app --template your-org/strata
+gh repo create my-app --template keithhchen/strata
 cd my-app
 ```
 
@@ -250,8 +269,6 @@ A change is complete only when:
 5. Any skipped browser coverage has a written reason and residual risk recorded
 
 ---
-
-[中文文档](README.zh.md)
 
 ## Reference
 
