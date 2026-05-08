@@ -1,0 +1,12 @@
+# ── Strata harness ────────────────────────────────────────────────────────────
+# Add this block to your project's .gitignore when adopting Strata.
+
+# Browser harness local visual artifacts (screenshots, videos)
+browser-tests/artifacts/**
+!browser-tests/artifacts/
+!browser-tests/artifacts/.gitkeep
+
+# Browser harness reports are committed evidence.
+# This override is required if your .gitignore has a blanket *.png rule.
+!browser-tests/reports/**
+# ─────────────────────────────────────────────────────────────────────────────

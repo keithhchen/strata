@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Node
+node_modules/
+dist/
+.next/
+
+# Local dev state
+*.db
+*.db-shm
+*.db-wal
+.env
+
+# Browser harness local visual artifacts
+browser-tests/artifacts/**
+!browser-tests/artifacts/
+!browser-tests/artifacts/.gitkeep
+
+# Browser harness reports are committed evidence — override *.png
+!browser-tests/reports/**
+
+# AI assistant local settings
+.claude/settings.local.json
+.codex/local.env
+
+# Misc
+.DS_Store
+*.png
+*.jpg
+*.jpeg
+*.webp
+!browser-tests/reports/**
