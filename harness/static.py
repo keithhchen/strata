@@ -171,11 +171,11 @@ def _string_constants_in_tuple(path: Path, var_name: str) -> set[str]:
 # ─────────────────────────────────────────────────────────────────────────────
 
 def test_harness_md_exists():
-    """HARNESS.md must exist as the canonical testing reference.
+    """STRATA.md must exist as the canonical testing reference.
 
     If this fails: contributors and AI assistants have no testing guide.
     """
-    assert (ROOT / "HARNESS.md").exists(), "HARNESS.md must exist"
+    assert (ROOT / "STRATA.md").exists(), "STRATA.md must exist"
 
 
 def test_tracking_dirs_exist():

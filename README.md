@@ -37,11 +37,11 @@ Strata is a testing methodology and project template for AI-assisted development
 | `unit` | Does the logic work? | < 5s | no server |
 | `browser` | Does the product work? | minutes | running product |
 
-**Static** — `pytest harness/static.py` with no server, no imports. Regex and AST checks over source files: forbidden patterns, required files, handler coverage. A new route that bypasses auth fails here before the server starts.
+**Static** — `pytest harness/static.py` with no server, no imports. Regex and AST checks over source files: forbidden patterns, required files, handler coverage.
 
-**Unit** — `pytest harness/unit.py` with no server, external calls mocked. Pure functions, parsers, state machines. Every test has a docstring that answers: *if this test fails, what breaks in the product?* A test without that answer gets deleted when it fails instead of fixed.
+**Unit** — `pytest harness/unit.py` with no server, external calls mocked. Pure functions, parsers, state machines. Every test has a docstring that answers: *if this test fails, what breaks in the product?*
 
-**Browser** — the product runs in Docker. A driver opens a real browser and executes a scenario — a markdown file that describes the user flow, observations, and asserts. Text evidence is committed to `browser-tests/reports/`. A scenario run without committed evidence didn't happen.
+**Browser** — the product runs in Docker. A driver opens a real browser and executes a scenario — a markdown file describing user flow, observations, and asserts. Text evidence is committed. A run without committed evidence didn't happen.
 
 ---
 
@@ -63,7 +63,7 @@ Strata is a testing methodology and project template for AI-assisted development
 
 ## Scenario
 
-A scenario is a markdown file. It is content, not code. Executable test code couples the test to a specific library and version — a markdown scenario describes *what a user does and what the product must prove*, and that description outlasts any particular driver.
+A scenario is a markdown file. Executable test code couples the test to a specific library and version — a markdown scenario describes *what a user does and what the product must prove*, and outlasts any particular driver.
 
 Every scenario has these sections:
 
@@ -76,7 +76,7 @@ Every scenario has these sections:
 | Purpose | One sentence: the behavior under test |
 | User Flow | Steps from the user's perspective |
 | Fixtures | Required starting state |
-| Actions | Driver-independent operations: "click Submit", not `page.click('#submit')` |
+| Actions | Driver-independent: "click Submit", not `page.click('#submit')` |
 | Wait/Settling | Named async convergence points with timeouts |
 | Observations | DOM, network, server logs, database state, filesystem state |
 | Asserts | Explicit pass/fail: "DOM shows `Welcome, Alice`" not "user is logged in" |
@@ -87,7 +87,7 @@ Every scenario has these sections:
 
 ## Browser
 
-A **driver** executes a scenario against the running product. Three peer drivers — switching drivers does not require rewriting scenarios:
+A driver executes a scenario against the running product. Three peer drivers — switching drivers does not require rewriting scenarios:
 
 | Driver | Mode | Best for |
 |--------|------|----------|
@@ -99,20 +99,31 @@ Evidence paths after a run:
 
 ```
 browser-tests/
-├── reports/                         ← committed to git
-│   └── <scenario>/
-│       └── <run-id>/
-│           ├── report.md            text summary
-│           ├── report.json          machine-readable
-│           ├── dom.txt              DOM snapshot
-│           ├── network.json         HTTP / WS responses
-│           └── server.log           backend log excerpt
-│
-└── artifacts/                       ← gitignored (binary only)
-    └── <scenario>/
-        └── <run-id>/
-            └── screenshot.png
+├── reports/                    ← committed to git
+│   └── <scenario>/<run-id>/
+│       ├── report.md
+│       ├── report.json
+│       ├── dom.txt
+│       ├── network.json
+│       └── server.log
+└── artifacts/                  ← gitignored (binary only)
+    └── <scenario>/<run-id>/
+        └── screenshot.png
 ```
+
+---
+
+## Development Principles
+
+| Principle | Rule |
+|-----------|------|
+| **Occam's Razor** | Don't add what isn't necessary. |
+| **Tests first** | Write the failing test before the implementation. |
+| **Full validation** | Every change runs every affected test. |
+| **No silent exceptions** | Every exception is logged, re-raised, or explicitly justified. |
+| **Reduce complexity** | Less code, fewer concepts, fewer moving parts. |
+| **Lateral thinking** | Nothing is a special case — find the parallel entities. |
+| **Error-first** | Design the failure paths before the happy path. |
 
 ---
 
@@ -157,13 +168,13 @@ cp -r path/to/strata/skills/browser .claude/skills/browser
 ./harness/testing.sh all
 ```
 
-Full methodology — principles, scenario design, driver contract, development paradigm: **[HARNESS.md](HARNESS.md)**
+Full methodology — scenario design, driver contract, evidence taxonomy, development paradigm: **[STRATA.md](STRATA.md)**
 
 ---
 
 ## Reference
 
-- [HARNESS.md](HARNESS.md) — full methodology reference
+- [STRATA.md](STRATA.md) — full methodology reference
 - [Scenario format](skills/browser/references/scenario-format.md)
 - [Evidence taxonomy](skills/browser/references/evidence-taxonomy.md)
 - [Browser model](skills/browser/references/harness-model.md)
