@@ -12,31 +12,64 @@ AI can write code faster than you can review it. That's the problem.
 
 Not the writing — the knowing. Knowing whether what was written actually works. Knowing whether it broke something else. Knowing, with evidence, that the feature is done and not just "done."
 
-Strata is a testing methodology for this reality. Three layers. A decision rule for choosing between them. And AI coding assistant skills that encode the methodology so your agents make the same calls your best engineer would.
+Strata is a testing methodology and project template for AI-assisted development. Three layers. A decision rule for choosing between them. AI coding assistant skills that encode the methodology so your agents make the same calls your best engineer would.
 
 ---
 
 ## The Three Layers
 
-The core insight is that "does this work?" is actually three different questions at three different costs.
+```
+              ╱╲
+             ╱  ╲           browser
+            ╱ B  ╲          product as black box · minutes
+           ╱──────╲
+          ╱   U    ╲        unit
+         ╱          ╲       pure logic · seconds
+        ╱────────────╲
+       ╱      S       ╲     static
+      ╱                ╲    structural invariants · milliseconds
+     ╱──────────────────╲
+```
 
-**Static** asks: *does the structure hold?* No server. No imports. Pure text and AST analysis. Under 0.3 seconds. This is where architectural invariants live — patterns that must never appear, files that must always exist, handlers that must cover every case. If a new route bypasses auth, static catches it before the server ever starts.
+| Layer | Question | Speed | Needs |
+|-------|----------|-------|-------|
+| `static` | Does the structure hold? | < 0.3s | nothing |
+| `unit` | Does the logic work? | < 5s | no server |
+| `browser` | Does the product work? | minutes | running product |
 
-**Unit** asks: *does the logic work?* No server, mocked externals, under 5 seconds. Pure functions, parsers, state machines, auth rules. Every unit test answers one question beyond "does it pass": *what breaks in the product if this test fails?* That answer is in the docstring. A test without a why gets deleted when it fails instead of fixed.
+**Static** — where architectural invariants live. Patterns that must never appear. Files that must always exist. Handlers that must cover every case. No server, no imports, pure text and AST. If a new route bypasses auth, static catches it before the server ever starts.
 
-**Browser** asks: *does the product work?* The running product, treated as a black box, driven by a real browser. No importing internals. No mocking the thing you're trying to test. The driver acts as a user. Evidence — DOM snapshots, logs, API responses — gets committed. Screenshots stay local. A scenario run without committed evidence didn't happen.
+**Unit** — deterministic logic, fast and without flakiness. Every test answers one question beyond "does it pass": *what breaks in the product if this test fails?* That answer is in the docstring. A test without a why gets deleted when it fails instead of fixed.
+
+**Browser** — the product, treated as a black box. No importing internals. The driver acts as a user. Evidence gets committed. A scenario run without committed evidence didn't happen.
 
 ---
 
-## Design Choices Worth Knowing
+## Layer Selection
+
+```
+  What are you testing?
+         │
+         ├── Structural fact, pattern, file existence?  ──► static
+         │
+         ├── Pure function, parser, state machine?      ──► unit
+         │
+         └── API, UI, database, WebSocket, file state?  ──► browser
+
+  Affects multiple layers? → test in all of them.
+```
+
+---
+
+## Design Choices
 
 **Drivers are interchangeable.** A scenario is a markdown file. Playwright, browser-use, and Claude in Chrome are peer implementations of the same contract. The scenario outlives any particular tool.
 
-**Evidence taxonomy is strict.** Text evidence (DOM, logs, JSON) is committed to `browser-tests/reports/`. Binary evidence (screenshots, video) lives in `browser-tests/artifacts/`, gitignored. This keeps the repo lean without losing reproducibility.
+**Evidence taxonomy is strict.** Text evidence (DOM, logs, JSON) is committed. Binary evidence (screenshots, video) stays local, gitignored. Lean repo, full reproducibility.
 
-**Tracking files are contracts.** Before writing code, you write a tracking file with a test plan. It moves from `todo/` to `done/` when tests pass and evidence exists. The intent and the proof live next to the code.
+**Tracking files are contracts.** Every change starts with a tracking file containing a test plan — before any code is written. It moves from `todo/` to `done/` when tests pass and evidence exists.
 
-**Skills are executable methodology.** The three skills — `static`, `unit`, `browser` — are not documentation. They're instructions that run inside your AI assistant. When an agent invokes the static skill, it makes the same layer-selection decisions a senior engineer would. The methodology travels with the repo.
+**Skills are executable methodology.** The three skills — `static`, `unit`, `browser` — are instructions that run inside your AI assistant. When an agent invokes the static skill, it makes the same layer-selection decisions a senior engineer would. The methodology travels with the repo.
 
 ---
 
@@ -46,11 +79,11 @@ The core insight is that "does this work?" is actually three different questions
 |---------|-----------|
 | Layer | `static`, `unit`, or `browser` — each answers a different question |
 | Invariant | A structural fact that must always hold, checked in `static.py` |
-| Tracking file | A markdown file with a test plan, moved from `todo/` to `done/` when done |
+| Tracking file | A markdown file with a test plan, moved from `todo/` to `done/` |
 | Scenario | A markdown file describing a user flow — driver-independent |
 | Driver | The tool that executes a scenario: `playwright`, `browser-use`, `claude-in-chrome` |
 | Evidence | What proves a scenario passed — text committed, binaries local |
-| Skill | Methodology encoded for an AI coding assistant |
+| Skill | Methodology encoded as instructions for an AI coding assistant |
 
 ---
 
@@ -70,13 +103,13 @@ cp -r path/to/strata/skills/browser .claude/skills/browser
 ./harness/testing.sh all
 ```
 
-Full adoption guide: [HARNESS.md](HARNESS.md)
+Full methodology — principles, scenario design, driver contract, development paradigm: **[HARNESS.md](HARNESS.md)**
 
 ---
 
 ## Reference
 
-- [HARNESS.md](HARNESS.md) — layer reference and adoption guide
+- [HARNESS.md](HARNESS.md) — full methodology reference
 - [Scenario format](skills/browser/references/scenario-format.md)
 - [Evidence taxonomy](skills/browser/references/evidence-taxonomy.md)
 - [Browser model](skills/browser/references/harness-model.md)
