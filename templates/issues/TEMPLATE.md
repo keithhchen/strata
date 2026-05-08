@@ -47,8 +47,8 @@ Brief description of the fix. Reference the file and line if known.
 ## Test Results
 
 ```
-./harness/testing.sh static   →  pass | fail
-./harness/testing.sh unit     →  pass | fail
+./strata/testing.sh static   →  pass | fail
+./strata/testing.sh unit     →  pass | fail
 browser report                →  browser-tests/reports/<scenario>/<run-id>/report.md
 ```
 

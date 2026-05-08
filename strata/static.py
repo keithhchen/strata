@@ -6,12 +6,12 @@ Target: < 0.3s total.
 
 HOW TO USE THIS FILE
 ====================
-Copy it into your project's harness/ directory, then replace or extend
+Copy it into your project's strata/ directory, then replace or extend
 the examples below with checks for your project's specific invariants.
 
 Run:
-  python3 -m pytest harness/static.py -q --tb=short
-  ./harness/testing.sh static
+  python3 -m pytest strata/static.py -q --tb=short
+  ./strata/testing.sh static
 
 WHAT BELONGS HERE
 =================
@@ -82,7 +82,7 @@ def test_no_silent_exceptions():
     Fix: add logging (log.exception(...)) or re-raise.
     """
     for path in ROOT.glob("**/*.py"):
-        if any(skip in str(path) for skip in ["harness/", ".venv/", "venv/"]):
+        if any(skip in str(path) for skip in ["strata/", ".venv/", "venv/"]):
             continue
         src = path.read_text()
         assert not SILENT_EXCEPTION.search(src), \
@@ -101,7 +101,7 @@ def test_no_hardcoded_credentials():
     exposed in logs, error messages, and repository history.
     """
     for path in ROOT.glob("**/*.py"):
-        if any(skip in str(path) for skip in ["harness/", ".venv/", "venv/", "test"]):
+        if any(skip in str(path) for skip in ["strata/", ".venv/", "venv/", "test"]):
             continue
         src = path.read_text()
         assert not HARDCODED_CREDENTIAL.search(src), \

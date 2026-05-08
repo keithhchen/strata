@@ -41,7 +41,7 @@ def cmd_init(target_dir: str) -> None:
     target.mkdir(parents=True, exist_ok=True)
     print(f"Initializing Strata in {target}\n")
 
-    _copy_dir(ROOT / "harness",             target / "harness",           "harness/")
+    _copy_dir(ROOT / "strata",              target / "strata",            "strata/")
     _copy_dir(ROOT / "browser-tests",       target / "browser-tests",     "browser-tests/")
     _copy_dir(ROOT / "templates" / "features", target / "features",       "features/")
     _copy_dir(ROOT / "templates" / "issues",   target / "issues",         "issues/")
@@ -54,7 +54,7 @@ def cmd_init(target_dir: str) -> None:
             f".claude/skills/{skill}/",
         )
 
-    print(f"\nDone. Next: cd {target} && ./harness/testing.sh all")
+    print(f"\nDone. Next: cd {target} && ./strata/testing.sh all")
 
 
 def main() -> None:

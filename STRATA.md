@@ -201,7 +201,7 @@ Every change starts with a tracking file that contains a test plan. The file is 
               └──────┬────────┘
                      │
               ┌──────▼────────────────────┐
-              │  ./harness/testing.sh all │
+              │  ./strata/testing.sh all │
               │  browser scenario + report│
               └──────┬────────────────────┘
                      │
@@ -236,9 +236,9 @@ Multiple worktrees can be open simultaneously. Changes in one don't affect anoth
 ## Running Tests
 
 ```bash
-./harness/testing.sh static    # < 0.3s — structural invariants
-./harness/testing.sh unit      # < 5s  — pure logic
-./harness/testing.sh all       # static + unit
+./strata/testing.sh static    # < 0.3s — structural invariants
+./strata/testing.sh unit      # < 5s  — pure logic
+./strata/testing.sh all       # static + unit
 ```
 
 Browser tests use the `browser` skill, not this script. Start the product, select a scenario, choose a driver, commit the evidence.
@@ -250,7 +250,7 @@ Browser tests use the `browser` skill, not this script. Start the product, selec
 ```
  ✓  Tracking file records which layers apply
  ✓  Tests written before product code (red first)
- ✓  ./harness/testing.sh all passes
+ ✓  ./strata/testing.sh all passes
  ✓  Browser scenarios have committed evidence in browser-tests/reports/
  ✓  Tracking file moved to done/ with results filled in
  ✓  Skipped browser coverage has a written reason recorded

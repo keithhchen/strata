@@ -23,13 +23,13 @@ What this feature does and what problem it solves.
 
 **Static checks to add** (if applicable):
 ```
-harness/static.py:
+strata/static.py:
 - 
 ```
 
 **Unit tests to add** (if applicable):
 ```
-harness/unit.py:
+strata/unit.py:
 - 
 ```
 
@@ -51,8 +51,8 @@ Asserts:
 
 **Run verification:**
 ```bash
-./harness/testing.sh static
-./harness/testing.sh unit
+./strata/testing.sh static
+./strata/testing.sh unit
 # browser: use the browser skill with browser-tests/scenarios/<name>.md
 ```
 
@@ -74,8 +74,8 @@ Questions to answer before coding:
 > Fill this in after completing the implementation.
 
 ```
-./harness/testing.sh static   →  pass | fail
-./harness/testing.sh unit     →  pass | fail
+./strata/testing.sh static   →  pass | fail
+./strata/testing.sh unit     →  pass | fail
 browser report                →  browser-tests/reports/<scenario>/<run-id>/report.md
 ```
 

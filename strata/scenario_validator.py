@@ -8,7 +8,7 @@ Checks every *.md in browser-tests/scenarios/ against the scenario contract:
   - At least one observation section is present
 
 Run standalone:
-    python3 harness/scenario_validator.py
+    python3 strata/scenario_validator.py
 
 Import in static.py:
     from scenario_validator import validate_all

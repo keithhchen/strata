@@ -14,6 +14,14 @@ Not the writing — the knowing. Knowing whether what was written actually works
 
 Strata is a testing methodology and project template for AI-assisted development. Three layers. A decision rule for choosing between them. AI coding assistant skills that encode the methodology so your agents make the same calls your best engineer would.
 
+## Getting Started
+
+```bash
+git clone https://github.com/keithhchen/strata
+python3 strata/strata.py init ./my-project
+cd my-project && ./strata/testing.sh all
+```
+
 ---
 
 ## The Three Layers
@@ -37,9 +45,9 @@ Strata is a testing methodology and project template for AI-assisted development
 | `unit` | Does the logic work? | < 5s | no server |
 | `browser` | Does the product work? | minutes | running product |
 
-**Static** — `pytest harness/static.py` with no server, no imports. Regex and AST checks over source files: forbidden patterns, required files, handler coverage.
+**Static** — `pytest strata/static.py` with no server, no imports. Regex and AST checks over source files: forbidden patterns, required files, handler coverage.
 
-**Unit** — `pytest harness/unit.py` with no server, external calls mocked. Pure functions, parsers, state machines. Every test has a docstring that answers: *if this test fails, what breaks in the product?*
+**Unit** — `pytest strata/unit.py` with no server, external calls mocked. Pure functions, parsers, state machines. Every test has a docstring that answers: *if this test fails, what breaks in the product?*
 
 **Browser** — the product runs in Docker. A driver opens a real browser and executes a scenario — a markdown file describing user flow, observations, and asserts. Text evidence is committed. A run without committed evidence didn't happen.
 
@@ -149,16 +157,6 @@ browser-tests/
 | Driver | The tool that executes a scenario: `playwright`, `browser-use`, `claude-in-chrome` |
 | Evidence | Text evidence committed to `browser-tests/reports/`; binaries gitignored locally |
 | Skill | Methodology encoded as instructions for an AI coding assistant |
-
----
-
-## Getting Started
-
-```bash
-git clone https://github.com/keithhchen/strata
-python3 strata/strata.py init ./my-project
-cd my-project && ./harness/testing.sh all
-```
 
 Full methodology — scenario design, driver contract, evidence taxonomy, development paradigm: **[STRATA.md](STRATA.md)**
 

@@ -28,13 +28,13 @@ Do not import app modules in this layer. Use only filesystem reads, `ast.parse()
 ## Execution
 
 ```bash
-./harness/testing.sh static
-python3 -m pytest harness/static.py -q --tb=short   # direct, for debugging
+./strata/testing.sh static
+python3 -m pytest strata/static.py -q --tb=short   # direct, for debugging
 ```
 
 ## When To Add Static Coverage
 
-Add or update `harness/static.py` when a change depends on:
+Add or update `strata/static.py` when a change depends on:
 
 - a required file or directory always being present
 - a pattern that must never appear in source (silent exceptions, hardcoded credentials, banned imports)
@@ -59,7 +59,7 @@ Static must fail *before* product code is written when the invariant is visible 
    | All items in a set are handled | `_string_constants_in_tuple()` + set diff |
    | A template has required placeholders | `assert "{VAR}" in template_text` |
 
-3. **Write the failing test first.** Run `./harness/testing.sh static` — it must be red before the invariant is enforced.
+3. **Write the failing test first.** Run `./strata/testing.sh static` — it must be red before the invariant is enforced.
 
 4. **Write the fix.** Enforce the invariant in the product code.
 
@@ -90,7 +90,7 @@ PATTERN = re.compile(r"except\s+Exception\s*:\s*\n\s*pass")
 
 def test_no_silent_exceptions():
     for path in ROOT.glob("**/*.py"):
-        if "harness/" in str(path) or ".venv/" in str(path):
+        if "strata/" in str(path) or ".venv/" in str(path):
             continue
         assert not PATTERN.search(path.read_text()), \
             f"Silent exception in {path}"

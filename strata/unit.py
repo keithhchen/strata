@@ -6,12 +6,12 @@ Target: < 5s total.
 
 HOW TO USE THIS FILE
 ====================
-Copy it into your project's harness/ directory, then replace the examples
+Copy it into your project's strata/ directory, then replace the examples
 with tests for your project's actual logic.
 
 Run:
-  python3 -m pytest harness/unit.py -q --tb=short
-  ./harness/testing.sh unit
+  python3 -m pytest strata/unit.py -q --tb=short
+  ./strata/testing.sh unit
 
 WHAT BELONGS HERE
 =================

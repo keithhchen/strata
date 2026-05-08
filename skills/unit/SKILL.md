@@ -28,8 +28,8 @@ Unit tests must not depend on a running server, real database, live API keys, or
 ## Execution
 
 ```bash
-./harness/testing.sh unit
-python3 -m pytest harness/unit.py -q --tb=short   # backend only
+./strata/testing.sh unit
+python3 -m pytest strata/unit.py -q --tb=short   # backend only
 cd frontend && npm test                             # frontend only
 ```
 

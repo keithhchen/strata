@@ -2,9 +2,9 @@
 # testing.sh — deterministic static/unit test runner
 #
 # Usage:
-#   ./harness/testing.sh static
-#   ./harness/testing.sh unit
-#   ./harness/testing.sh all
+#   ./strata/testing.sh static
+#   ./strata/testing.sh unit
+#   ./strata/testing.sh all
 #
 # Layers:
 #   static  — AST-level invariant checks, no server needed
@@ -38,7 +38,7 @@ START=$(date +%s)
 run_static() {
   section "Static"
   cd "$ROOT"
-  if python3 -m pytest harness/static.py -q --tb=short 2>&1; then
+  if python3 -m pytest strata/static.py -q --tb=short 2>&1; then
     pass "Static passed"
   else
     fail "Static FAILED"; return 1
@@ -48,7 +48,7 @@ run_static() {
 run_unit() {
   section "Unit (backend)"
   cd "$ROOT"
-  if python3 -m pytest harness/unit.py -q --tb=short 2>&1; then
+  if python3 -m pytest strata/unit.py -q --tb=short 2>&1; then
     pass "Unit passed"
   else
     fail "Unit FAILED"; return 1
